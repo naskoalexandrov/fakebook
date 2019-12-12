@@ -11,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/users")
 public class UserController extends BaseController {
 
     private final UserService userService;
@@ -28,15 +30,18 @@ public class UserController extends BaseController {
     @GetMapping("/register")
     @PreAuthorize("isAnonymous()")
     @PageTitle("Register")
-    public ModelAndView register(){
-        return super.view("register");
+    public ModelAndView register() {
+        return super.view("user/register");
     }
 
     @PostMapping("/register")
     @PreAuthorize("isAnonymous()")
-    @PageTitle("Register")
     public ModelAndView registerConfirm(@ModelAttribute UserRegisterBindingModel model) {
-            this.userService.registerUser(this.modelMapper.map(model, UserServiceModel.class));
+        if (!model.getPassword().equals(model.getConfirmPassword())) {
+            return super.view("user/register");
+        }
+
+        this.userService.registerUser(this.modelMapper.map(model, UserServiceModel.class));
 
         return super.redirect("/login");
     }
@@ -45,7 +50,7 @@ public class UserController extends BaseController {
     @PreAuthorize("isAnonymous()")
     @PageTitle("Login")
     public ModelAndView login() {
-        return super.view("login");
+        return super.view("user/login");
     }
 
 }
