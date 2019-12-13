@@ -26,9 +26,8 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void putRolesInDataBase() {
         if(this.roleRepository.count() == 0){
-            this.roleRepository.saveAndFlush(new Role("ROLE_USER"));
-            this.roleRepository.saveAndFlush(new Role("ROLE_ADMIN"));
-            this.roleRepository.saveAndFlush(new Role("ROLE_ROOT"));
+            this.roleRepository.saveAndFlush(new Role("USER"));
+            this.roleRepository.saveAndFlush(new Role("ADMIN"));
         }
     }
 
@@ -42,6 +41,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleServiceModel findByAuthority(String authority) {
-        return this.modelMapper.map(this.roleRepository.findByAndAuthority(authority),RoleServiceModel.class);
+        return this.modelMapper.map(this.roleRepository.findByAuthority(authority),RoleServiceModel.class);
     }
 }

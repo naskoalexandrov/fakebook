@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="~{fragments/head}"></th:block>
+    <th:block th:include="~{fragments/head-guest}"></th:block>
 </head>
 <body>
 <header>
@@ -14,12 +14,13 @@
             <div class="fadeIn first">
                 <h1 class="text-center text-black ">Login</h1>
             </div>
-            <form th:method="POST" th:action="@{/users/login}">
+            <form th:method="post" th:action="@{/users/login}">
+                <input type="hidden" name="_csrf" value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
                 <div class="form-group">
-                    <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
+                    <input type="text" id="username" class="fadeIn second" placeholder="Username" name="username">
                 </div>
                 <div class="form-group">
-                <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+                    <input type="password" id="password" class="fadeIn third" placeholder="Password" name="password">
                 </div>
                 <input type="submit" class="fadeIn fourth" value="LogIn">
             </form>

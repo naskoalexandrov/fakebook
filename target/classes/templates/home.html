@@ -2,14 +2,33 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="~{fragments/head}"></th:block>
+    <th:block th:include="~{fragments/head-user}"></th:block>
 </head>
 <body>
 <header>
     <th:block th:include="~{fragments/nav-bar}"></th:block>
 </header>
-<main>
-    <h1>Zaglavie</h1>
+<main class="main mt-5">
+    <div class="container main-container">
+        <div class="card mb-3 shadow-sm bg-white rounded">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="author-image-wrapper">
+                        <img class="author-image img-fluid"
+                             src="https://scontent.fsof3-1.fna.fbcdn.net/v/t1.0-1/45022179_2139711569678437_950533759331991552_n.jpg?_nc_cat=111&_nc_ohc=Mei2qCTznowAQnZlh_4rPD7K3noYXq19Bs4hhXS98ndgYg6Y3UEy3FLlw&_nc_ht=scontent.fsof3-1.fna&oh=776b02d18a9b874e324affa365947014&oe=5EB49F59"/>
+                    </div>
+                    <div class="w-100 ml-3">
+                        <h4 class="border-bottom mb-0">Title</h4>
+                        <small class="text-muted mb-0">posted 4 mins ago</small>
+
+                    </div>
+                </div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, repudiandae facere dolore
+                    quam excepturi nemo earum dolorem dolorum quibusdam fuga dolores tempora facilis placeat assumenda
+                    eveniet sunt error! Suscipit, quis.</p>
+            </div>
+        </div>
+    </div>
 </main>
 <footer>
     <th:block th:include="~{fragments/footer}"></th:block>

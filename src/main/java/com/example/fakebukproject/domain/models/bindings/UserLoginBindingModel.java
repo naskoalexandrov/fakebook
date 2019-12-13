@@ -6,7 +6,9 @@ public class UserLoginBindingModel {
 
     private String password;
 
-    public UserLoginBindingModel() {
+
+    public UserLoginBindingModel(){
+
     }
 
     public String getUsername() {
