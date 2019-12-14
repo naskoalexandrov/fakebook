@@ -1,7 +1,9 @@
 package com.example.fakebukproject.web.controllers;
 
+import com.example.fakebukproject.domain.models.bindings.UserEditBindingModel;
 import com.example.fakebukproject.domain.models.bindings.UserRegisterBindingModel;
 import com.example.fakebukproject.domain.models.service.UserServiceModel;
+import com.example.fakebukproject.domain.models.view.UserProfileViewModel;
 import com.example.fakebukproject.service.UserService;
 import com.example.fakebukproject.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
@@ -51,4 +55,37 @@ public class UserController extends BaseController {
     public ModelAndView login() {
         return super.view("user/login");
     }
+
+    @GetMapping("/profile")
+    @PreAuthorize("isAuthenticated()")
+    @PageTitle("Profile")
+    public ModelAndView profile(Principal principal, ModelAndView modelAndView) {
+        modelAndView
+                .addObject("model", this.modelMapper.map(this.userService
+                                .findUserByUserName(principal.getName()), UserProfileViewModel.class));
+        return super.view("user/profile", modelAndView);
+    }
+
+    @GetMapping("/edit")
+    @PreAuthorize("isAuthenticated()")
+    @PageTitle("Edit User")
+    public ModelAndView editProfile(Principal principal, ModelAndView modelAndView) {
+        modelAndView
+                .addObject("model", this.modelMapper.map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
+
+        return super.view("user/edit", modelAndView);
+    }
+
+    @PatchMapping("/edit")
+    @PreAuthorize("isAuthenticated()")
+    public ModelAndView editProfileConfirm(@ModelAttribute UserEditBindingModel model){
+        if (!model.getPassword().equals(model.getConfirmPassword())){
+            return super.view("user/edit");
+        }
+
+        this.userService.editUserProfile(this.modelMapper.map(model, UserServiceModel.class), model.getOldPassword());
+
+        return super.redirect("/users/profile");
+    }
 }
+

@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-    <th:block th:include="~{fragments/head-guest}"></th:block>
+    <th:block th:include="~{fragments/head-user}"></th:block>
 </head>
 <body>
 <header>
     <th:block th:include="~{fragments/nav-bar}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
 </header>
+
 <main class="mt-5">
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <div class="fadeIn first">
                 <hr class="bg-hero hr-2"/>
-                <h1 class="text-center text-black ">Login</h1>
+                <h1 class="text-center text-black ">Share Something With Your Friends</h1>
                 <hr class="bg-hero hr-2"/>
             </div>
-            <form th:method="post" th:action="@{/users/login}">
-                <input type="hidden" name="_csrf" value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
+            <form th:method="post" th:action="@{/posts/post}">
                 <div class="form-group">
-                    <input type="text" id="username" class="fadeIn second" placeholder="Username" name="username">
+                    <input type="text" id="author" class="fadeIn second" name="author" placeholder="Author">
                 </div>
                 <div class="form-group">
-                    <input type="password" id="password" class="fadeIn third" placeholder="Password" name="password">
+                    <input type="text" id="text" class="fadeIn third" name="text"
+                           placeholder="Type something..">
                 </div>
                 <hr class="bg-hero hr-2"/>
-                <input type="submit" class="fadeIn fourth" value="LogIn">
+                <input type="submit" class="fadeIn fourth" value="Post">
             </form>
         </div>
     </div>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <th:block th:include="~{fragments/head-user}"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/nav-bar}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
+</header>
+
+<main class="mt-5">
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <div class="fadeIn first">
+                <hr class="bg-hero hr-2"/>
+                <h1 class="text-center text-black ">Edit Profile</h1>
+                <hr class="bg-hero hr-2"/>
+            </div>
+            <form th:action="@{/users/edit}" th:method="patch">
+                <div class="form-group">
+                    <input type="text" th:value="${model.username}" id="username" class="fadeIn second" name="username"
+                           readonly>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="oldPassword" class="fadeIn third" name="oldPassword"
+                           placeholder="Old Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" class="fadeIn fourth" name="password"
+                           placeholder="New Password">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" class="fadeIn fifth" name="confirmPassword"
+                           placeholder="Confirm New Password">
+                </div>
+                <div class="form-group">
+                    <input type="text" th:value="${model.email}" id="email" class="fadeIn sixth" name="email"
+                           readonly>
+                </div>
+                <hr class="bg-hero hr-2"/>
+                <input type="submit" class="fadeIn sixth" value="Edit">
+            </form>
+        </div>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

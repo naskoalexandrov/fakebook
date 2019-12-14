@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <th:block th:include="~{fragments/head-user}"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/nav-bar}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
+</header>
+
+<main class="mt-5">
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <div class="fadeIn first">
+                <hr class="bg-hero hr-2"/>
+                <h1 class="text-center text-black ">Post Picture</h1>
+                <hr class="bg-hero hr-2"/>
+            </div>
+            <form th:method="post" th:action="@{/pictures/post}">
+                <div class="form-group">
+                    <input type="text" id="uploader" class="fadeIn second" name="uploader" placeholder="Uploader">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="description" class="fadeIn third" name="description"
+                           placeholder="Description">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="image Url" class="fadeIn fourth" name="imageUrl" placeholder="Image URL">
+                </div>
+                <hr class="bg-hero hr-2"/>
+                <input type="submit" class="fadeIn fifth" value="Post">
+            </form>
+        </div>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

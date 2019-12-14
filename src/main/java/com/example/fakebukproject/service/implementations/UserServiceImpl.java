@@ -70,19 +70,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserServiceModel findUserByUserName(String username) {
-        return null;
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return this.userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND));
     }
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                new HashSet<>());
+    public UserServiceModel findUserByUserName(String username) {
+        return this.userRepository.findByUsername(username)
+                .map(u -> this.modelMapper.map(u, UserServiceModel.class))
+                .orElseThrow(() -> new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND));
     }
 
     @Override
@@ -93,10 +92,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserServiceModel editUserProfile(UserServiceModel userServiceModel, String oldPassword) {
+        User user = this.userRepository.findByUsername(userServiceModel.getUsername())
+                .orElseThrow(()-> new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND));
+
+        if (!this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new IllegalArgumentException(Constants.PASSWORD_IS_INCORRECT);
+        }
+
+        user.setPassword(!"".equals(userServiceModel.getPassword()) ?
+                this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()) :
+                user.getPassword());
+
+        LogServiceModel logServiceModel = new LogServiceModel();
+        logServiceModel.setUsername(user.getUsername());
+        logServiceModel.setDescription("User profile edited");
+        logServiceModel.setTime(LocalDateTime.now());
+
+        this.logService.putLogInDatabase(logServiceModel);
+
+        return this.modelMapper.map(this.userRepository.saveAndFlush(user), UserServiceModel.class);
+    }
+
+    @Override
     public List<UserServiceModel> findAllUsers() {
         return this.userRepository.findAll()
                 .stream()
                 .map(u -> this.modelMapper.map(u, UserServiceModel.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteUser(String id) {
+
+    }
+
+    @Override
+    public void makeAdmin(String id) {
+
+    }
+
+    @Override
+    public void makeUser(String id) {
+
     }
 }

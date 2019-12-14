@@ -12,7 +12,9 @@
 	<div class="wrapper fadeInDown">
   <div id="formContent">
     <div class="fadeIn first">
+      <hr class="bg-hero hr-2"/>
       <h1 class="text-center text-black ">Register</h1>
+      <hr class="bg-hero hr-2"/>
     </div>
     <form th:method="post" th:action="@{/users/register}">
         <div class="form-group">
@@ -27,6 +29,7 @@
         <div class="form-group">
 	  <input type="text" id="email" class="fadeIn fifth" name="email" placeholder="Email">
         </div>
+      <hr class="bg-hero hr-2"/>
       <input type="submit" class="fadeIn sixth" value="Register">
     </form>
   </div>

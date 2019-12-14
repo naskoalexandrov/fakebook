@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <th:block th:include="~{fragments/head-user}"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/nav-bar}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
+</header>
+
+<main class="mt-5">
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <div class="row d-flex justify-content-center fadeIn first">
+                <div class="col-md-6 d-flex flex-column">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5jKGCDCAwvaukRxD-dMS_yr8V4_SUjeP5B3BGIGnxKKfiON6f&s"
+                         class="mx-auto mt-5" width="200" height="200">
+                    <h4 class="mx-auto mt-5 text-muted  fadeIn second" th:utext="${model.username}"></h4>
+                    <h5 class="mx-auto mt-3 text-muted  fadeIn third" th:utext="${model.email}"></h5>
+                </div>
+                <form class="center">
+                    <a th:href="@{/users/edit}" class="fadeIn fourth mt-3 btn btn-primary justify-content-center">Edit Profile</a>
+                    <a href="#" class="fadeIn fourth mt-3 btn btn-primary justify-content-center">Added Pictures</a>
+                    <a href="#" class="fadeIn fourth mt-3 btn btn-primary justify-content-center">Added Posts</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

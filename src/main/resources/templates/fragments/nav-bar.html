@@ -23,25 +23,30 @@
                     <div class="collapse navbar-collapse" id="userNav">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Home</a>
+                                <a class="nav-link" th:href="@{/home}">Home</a>
                             </li>
+                            <th:block sec:authorize="hasRole('ADMIN')">
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="#">All Users</a>
+                                </li>
+                            </th:block>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Add Friends</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Add Post</a>
+                                <a class="nav-link" th:href="@{/posts/post}">Add Post</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Add Picture</a>
+                                <a class="nav-link" th:href="@{/pictures/post}">Add Picture</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Add Item</a>
+                                <a class="nav-link" th:href="@{/items/add}">Add Item</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Marketplace</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Profile</a>
+                                <a class="nav-link" th:href="@{/users/profile}">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" th:href="@{/logout}">Logout</a>
