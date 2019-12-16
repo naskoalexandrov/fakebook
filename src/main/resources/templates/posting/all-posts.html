@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <th:block th:include="~{fragments/head-user}"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/nav-bar}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
+</header>
+<main class="main mt-5">
+    <div class="container main-container shadow-lg p-3">
+        <th:block th:each="posts, iter : ${posts}">
+            <div class="card mb-3 shadow-sm bg-white rounded">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="author-image-wrapper">
+                            <img class="author-image img-fluid"
+                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5jKGCDCAwvaukRxD-dMS_yr8V4_SUjeP5B3BGIGnxKKfiON6f&s"/>
+                        </div>
+                        <div class="w-100 ml-3">
+                            <h4 class="border-bottom mb-0" th:utext="${posts.author}"></h4>
+                            <p th:utext="${posts.text}" class="text-muted mt-1 mb-1"></p>
+                            <a th:href="@{/posts/delete/{id}(id=${posts.id})}"
+                               class="btn btn-danger font-weight-bold text-white">Delete</a>
+                            <a th:href="@{/posts/edit/{id}(id=${posts.id})}"
+                               class="btn btn-info font-weight-bold text-white">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

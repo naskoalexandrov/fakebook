@@ -8,10 +8,8 @@ import com.example.fakebukproject.service.UserService;
 import com.example.fakebukproject.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -71,21 +69,23 @@ public class UserController extends BaseController {
     @PageTitle("Edit User")
     public ModelAndView editProfile(Principal principal, ModelAndView modelAndView) {
         modelAndView
-                .addObject("model", this.modelMapper.map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
+                .addObject("model", this.modelMapper.
+                        map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
 
-        return super.view("user/edit", modelAndView);
+        return super.view("user/edit-user", modelAndView);
     }
 
-    @PatchMapping("/edit")
+    @PostMapping("/edit")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView editProfileConfirm(@ModelAttribute UserEditBindingModel model){
         if (!model.getPassword().equals(model.getConfirmPassword())){
-            return super.view("user/edit");
+            return super.view("user/edit-user");
         }
 
         this.userService.editUserProfile(this.modelMapper.map(model, UserServiceModel.class), model.getOldPassword());
 
-        return super.redirect("/users/profile");
+        return super.redirect("/home");
     }
+
 }
 

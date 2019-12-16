@@ -5,6 +5,7 @@ import com.example.fakebukproject.domain.entities.User;
 import com.example.fakebukproject.domain.models.service.LogServiceModel;
 import com.example.fakebukproject.domain.models.service.UserServiceModel;
 import com.example.fakebukproject.error.Constants;
+import com.example.fakebukproject.error.UserNotFoundException;
 import com.example.fakebukproject.repository.RoleRepository;
 import com.example.fakebukproject.repository.UserRepository;
 import com.example.fakebukproject.service.LogService;
@@ -94,7 +95,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserServiceModel editUserProfile(UserServiceModel userServiceModel, String oldPassword) {
         User user = this.userRepository.findByUsername(userServiceModel.getUsername())
-                .orElseThrow(()-> new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND));
+                .orElseThrow(() -> new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND));
 
         if (!this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
             throw new IllegalArgumentException(Constants.PASSWORD_IS_INCORRECT);
@@ -103,6 +104,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(!"".equals(userServiceModel.getPassword()) ?
                 this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()) :
                 user.getPassword());
+        user.setEmail(userServiceModel.getEmail());
 
         LogServiceModel logServiceModel = new LogServiceModel();
         logServiceModel.setUsername(user.getUsername());
@@ -120,11 +122,6 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(u -> this.modelMapper.map(u, UserServiceModel.class))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public void deleteUser(String id) {
-
     }
 
     @Override

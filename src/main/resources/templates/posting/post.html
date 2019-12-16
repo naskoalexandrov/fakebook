@@ -21,7 +21,8 @@
             </div>
             <form th:method="post" th:action="@{/posts/post}">
                 <div class="form-group">
-                    <input type="text" id="author" class="fadeIn second" name="author" placeholder="Author">
+                    <input type="text" id="author" class="fadeIn second" name="author"
+                           th:value="${#authentication.getPrincipal().getUsername()}" readonly>
                 </div>
                 <div class="form-group">
                     <input type="text" id="text" class="fadeIn third" name="text"

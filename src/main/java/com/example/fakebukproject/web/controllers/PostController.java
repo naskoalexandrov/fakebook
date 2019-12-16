@@ -2,20 +2,21 @@ package com.example.fakebukproject.web.controllers;
 
 import com.example.fakebukproject.domain.models.bindings.PostBindingModel;
 import com.example.fakebukproject.domain.models.service.PostServiceModel;
+import com.example.fakebukproject.domain.models.view.PostViewModel;
 import com.example.fakebukproject.domain.models.view.UserProfileViewModel;
 import com.example.fakebukproject.service.PostService;
 import com.example.fakebukproject.service.UserService;
+import com.example.fakebukproject.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/posts")
@@ -48,6 +49,72 @@ public class PostController extends BaseController {
         this.postService.posting(this.modelMapper.map(model, PostServiceModel.class));
 
         return super.redirect("/home");
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("isAuthenticated()")
+    @PageTitle("All Posts")
+    public ModelAndView showAll(Principal principal, ModelAndView modelAndView){
+
+        modelAndView
+                .addObject("model", this.modelMapper.
+                        map(this.postService.findPostByAuthor(principal.getName()), PostViewModel.class));
+
+        List<PostServiceModel> posts = this.postService.findAllPosts()
+                .stream()
+                .filter(p -> p.getAuthor().equals(principal.getName()))
+                .map(p -> this.modelMapper.map(p, PostServiceModel.class))
+                .collect(Collectors.toList());
+
+        modelAndView.addObject("posts", posts);
+        return super.view("posting/all-posts", modelAndView);
+    }
+
+    @GetMapping("/edit/{id}")
+    @PageTitle("Edit Post")
+    public ModelAndView editPost(@PathVariable String id, ModelAndView modelAndView){
+        PostServiceModel postServiceModel = this.postService.findPostById(id);
+
+        modelAndView.addObject("post", postServiceModel);
+        modelAndView.addObject("postId", id);
+
+        return super.view("posting/edit-post",modelAndView);
+
+    }
+
+    @PostMapping("/edit/{id}")
+    public ModelAndView editQuoteConfirm(@PathVariable String id,@ModelAttribute PostBindingModel model){
+        this.postService.editPost(id, this.modelMapper.map(model, PostServiceModel.class));
+
+        return super.redirect("/posts/all");
+    }
+
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView deletePost(@PathVariable String id, ModelAndView modelAndView) {
+        PostServiceModel postServiceModel = this.postService.findPostById(id);
+
+        modelAndView.addObject("post", postServiceModel);
+        modelAndView.addObject("postId", id);
+
+        return super.view("posting/delete-post", modelAndView);
+    }
+
+    @PostMapping("/delete/{id}")
+    @PageTitle("Delete Post")
+    public ModelAndView deletePostConfirm(@PathVariable String id) {
+        this.postService.delete(id);
+
+        return super.redirect("/posts/all");
+    }
+
+    @GetMapping("/all-posts")
+    @ResponseBody
+    public List<PostViewModel> fetchAllQuotes() {
+        return this.postService.findAllPosts()
+                .stream()
+                .map(p -> this.modelMapper.map(p, PostViewModel.class))
+                .collect(Collectors.toList());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.fakebukproject.domain.models.bindings;
 
 public class UserEditBindingModel {
+
     private String username;
     private String oldPassword;
     private String password;

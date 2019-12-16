@@ -19,7 +19,7 @@
                 <h1 class="text-center text-black ">Edit Profile</h1>
                 <hr class="bg-hero hr-2"/>
             </div>
-            <form th:action="@{/users/edit}" th:method="patch">
+            <form th:action="@{/users/edit}" th:method="post">
                 <div class="form-group">
                     <input type="text" th:value="${model.username}" id="username" class="fadeIn second" name="username"
                            readonly>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <input type="text" th:value="${model.email}" id="email" class="fadeIn sixth" name="email"
-                           readonly>
+                        placeholder="Email">
                 </div>
                 <hr class="bg-hero hr-2"/>
                 <input type="submit" class="fadeIn sixth" value="Edit">

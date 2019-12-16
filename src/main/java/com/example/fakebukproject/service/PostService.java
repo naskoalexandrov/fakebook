@@ -8,9 +8,15 @@ public interface PostService {
 
     PostServiceModel posting(PostServiceModel postServiceModel);
 
-    PostServiceModel findPostByText(String text);
-
     List<PostServiceModel> findPostByAuthor(String author);
 
     List<PostServiceModel> findAllPosts();
+
+    PostServiceModel findPostById(String id);
+
+    PostServiceModel editPost(String id, PostServiceModel postServiceModel);
+
+    void delete(String id);
+
+
 }
