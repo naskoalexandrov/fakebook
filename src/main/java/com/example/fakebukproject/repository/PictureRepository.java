@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface PictureRepository extends JpaRepository<Picture, String> {
 
-    Optional<Picture> findPictureByDescription(String description);
+    Optional<Picture> findPictureByUploader(String uploader);
 
 }

@@ -3,6 +3,8 @@ package com.example.fakebukproject.service.implementations;
 import com.example.fakebukproject.domain.entities.Picture;
 import com.example.fakebukproject.domain.models.service.LogServiceModel;
 import com.example.fakebukproject.domain.models.service.PictureServiceModel;
+import com.example.fakebukproject.error.Constants;
+import com.example.fakebukproject.error.PictureNotFoundException;
 import com.example.fakebukproject.repository.PictureRepository;
 import com.example.fakebukproject.service.LogService;
 import com.example.fakebukproject.service.PictureService;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PictureServiceImpl implements PictureService {
@@ -42,32 +45,68 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public PictureServiceModel findPictureByDescription(String description) {
-        return null;
+    public List<PictureServiceModel> findPictureByDescription(String description) {
+        return this.pictureRepository.findAll()
+                .stream()
+                .map(p -> this.modelMapper.map(p, PictureServiceModel.class))
+                .filter(p -> p.getDescription().equals(description))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<PictureServiceModel> findPictureByUploader(String author) {
-        return null;
+    public List<PictureServiceModel> findPictureByUploader(String uploader) {
+        return this.pictureRepository.findAll()
+                .stream()
+                .map(p -> this.modelMapper.map(p, PictureServiceModel.class))
+                .filter(p -> p.getUploader().equals(uploader))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<PictureServiceModel> findAllPictures() {
-        return null;
+        return this.pictureRepository.findAll()
+                .stream()
+                .map(p -> this.modelMapper.map(p, PictureServiceModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override
     public PictureServiceModel findPictureById(String id) {
-        return null;
+        return this.pictureRepository.findById(id)
+                .map(p -> this.modelMapper.map(p, PictureServiceModel.class))
+                .orElseThrow(() -> new PictureNotFoundException(Constants.PICTURE_ID_NOT_FOUND));
     }
 
     @Override
     public void deletePicture(String id) {
+        Picture picture = this.pictureRepository.findById(id)
+                .orElseThrow(() -> new PictureNotFoundException(Constants.PICTURE_ID_NOT_FOUND));
+
+        LogServiceModel logServiceModel = new LogServiceModel();
+        logServiceModel.setUsername(picture.getUploader());
+        logServiceModel.setDescription("Picture deleted");
+        logServiceModel.setTime(LocalDateTime.now());
+
+        this.logService.putLogInDatabase(logServiceModel);
+
+        this.pictureRepository.delete(picture);
 
     }
 
     @Override
     public PictureServiceModel editPicture(String id, PictureServiceModel pictureServiceModel) {
-        return null;
+        Picture picture = this.pictureRepository.findById(id)
+                .orElseThrow(() -> new PictureNotFoundException(Constants.PICTURE_ID_NOT_FOUND));
+
+        picture.setUploader(pictureServiceModel.getUploader());
+        picture.setDescription(pictureServiceModel.getDescription());
+        picture.setImageUrl(pictureServiceModel.getImageUrl());
+
+        LogServiceModel logServiceModel = new LogServiceModel();
+        logServiceModel.setUsername(pictureServiceModel.getUploader());
+        logServiceModel.setDescription("Picture edited");
+        logServiceModel.setTime(LocalDateTime.now());
+
+        return this.modelMapper.map(this.pictureRepository.saveAndFlush(picture), PictureServiceModel.class);
     }
 }

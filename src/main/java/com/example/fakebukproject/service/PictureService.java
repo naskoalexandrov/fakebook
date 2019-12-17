@@ -8,7 +8,7 @@ public interface PictureService {
 
     PictureServiceModel postPicture(PictureServiceModel pictureServiceModel);
 
-    PictureServiceModel findPictureByDescription(String description);
+    List<PictureServiceModel> findPictureByDescription(String description);
 
     List<PictureServiceModel> findPictureByUploader(String uploader);
 

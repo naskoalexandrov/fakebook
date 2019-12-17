@@ -16,7 +16,8 @@
                 <h1 class="text-center text-black ">Login</h1>
                 <hr class="bg-hero hr-2"/>
             </div>
-            <form th:method="post" th:action="@{/users/login}">
+            <form th:method="post" th:action="@{/users/login}"><input type="hidden" name="_csrf"
+                                                                      value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
                 <input type="hidden" name="_csrf" value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
                 <div class="form-group">
                     <input type="text" id="username" class="fadeIn second" placeholder="Username" name="username">

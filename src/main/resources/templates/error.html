@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head-user}"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/nav-bar}"></th:block>
+</header>
+<main class="main mt-5">
+    <div class="container main-container shadow-lg p-3">
+        <div class="card mb-3 shadow-sm bg-white rounded">
+            <div class="card-body">
+                <hr class="bg-hero hr-2"/>
+                <h1 style="font-size: 50px" class="text-center font-weight-bold text-black">Счупи се :(</h1>
+                <div class="text-center">
+                    <h3  th:utext="${message}" style="font-size: 25px; color: red;"></h3>
+                </div>
+                <div class="text-center">
+                    <img src="https://cdn.shopify.com/s/files/1/1407/3324/articles/bigstock-Newborn-baby-cry-resized_1000x600_crop_center.jpg?v=1476562157" alt="bebe">
+                </div>
+                <span style="visibility: hidden">....</span>
+        </div>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

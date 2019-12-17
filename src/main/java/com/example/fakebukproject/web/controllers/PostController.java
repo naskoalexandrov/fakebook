@@ -4,13 +4,16 @@ import com.example.fakebukproject.domain.models.bindings.PostBindingModel;
 import com.example.fakebukproject.domain.models.service.PostServiceModel;
 import com.example.fakebukproject.domain.models.view.PostViewModel;
 import com.example.fakebukproject.domain.models.view.UserProfileViewModel;
+import com.example.fakebukproject.error.PostNotFoundException;
 import com.example.fakebukproject.service.PostService;
 import com.example.fakebukproject.service.UserService;
 import com.example.fakebukproject.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -51,6 +54,25 @@ public class PostController extends BaseController {
         return super.redirect("/home");
     }
 
+    @GetMapping("/all-by-user")
+    @PreAuthorize("isAuthenticated()")
+    @PageTitle("All Posts By User")
+    public ModelAndView showAllByUser(Principal principal, ModelAndView modelAndView){
+
+        modelAndView
+                .addObject("model", this.modelMapper.
+                        map(this.postService.findPostByAuthor(principal.getName()), PostViewModel.class));
+
+        List<PostServiceModel> posts = this.postService.findAllPosts()
+                .stream()
+                .filter(p -> p.getAuthor().equals(principal.getName()))
+                .map(p -> this.modelMapper.map(p, PostServiceModel.class))
+                .collect(Collectors.toList());
+
+        modelAndView.addObject("posts", posts);
+        return super.view("posting/all-posts-by-user", modelAndView);
+    }
+
     @GetMapping("/all")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("All Posts")
@@ -62,7 +84,6 @@ public class PostController extends BaseController {
 
         List<PostServiceModel> posts = this.postService.findAllPosts()
                 .stream()
-                .filter(p -> p.getAuthor().equals(principal.getName()))
                 .map(p -> this.modelMapper.map(p, PostServiceModel.class))
                 .collect(Collectors.toList());
 
@@ -83,7 +104,7 @@ public class PostController extends BaseController {
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView editQuoteConfirm(@PathVariable String id,@ModelAttribute PostBindingModel model){
+    public ModelAndView editPostConfirm(@PathVariable String id,@ModelAttribute PostBindingModel model){
         this.postService.editPost(id, this.modelMapper.map(model, PostServiceModel.class));
 
         return super.redirect("/posts/all");
@@ -108,13 +129,36 @@ public class PostController extends BaseController {
         return super.redirect("/posts/all");
     }
 
+    @ExceptionHandler({PostNotFoundException.class})
+    public ModelAndView handleVideoNotFound(PostNotFoundException e) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("message", e.getMessage());
+        modelAndView.addObject("statusCode", e.getStatus());
+
+        return modelAndView;
+    }
+
     @GetMapping("/all-posts")
     @ResponseBody
-    public List<PostViewModel> fetchAllQuotes() {
+    public List<PostViewModel> fetchAllPosts() {
         return this.postService.findAllPosts()
                 .stream()
                 .map(p -> this.modelMapper.map(p, PostViewModel.class))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/all-posts-by-user")
+    @ResponseBody
+    public List<PostViewModel> fetchAllPostsByUser() {
+        return this.postService.findAllPosts()
+                .stream()
+                .map(p -> this.modelMapper.map(p, PostViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @InitBinder
+    private void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
 }

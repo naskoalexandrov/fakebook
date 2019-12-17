@@ -16,32 +16,34 @@
         <div id="formContent">
             <div class="fadeIn first">
                 <hr class="bg-hero hr-2"/>
-                <h1 class="text-center text-black ">Add item to Marketplace</h1>
+                <h1 class="text-center text-black ">Delete Item</h1>
                 <hr class="bg-hero hr-2"/>
             </div>
-            <form th:method="post" th:action="@{/items/add}"><input type="hidden" name="_csrf"
-                                                                    value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
+            <form th:method="post" th:action="@{/items/delete/{id}(id=${itemId})}" enctype="multipart/form-data"><input
+                    type="hidden" name="_csrf"
+                    value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
                 <div class="form-group">
                     <input type="text" id="seller" class="fadeIn second" name="seller"
-                           th:value="${#authentication.getPrincipal().getUsername()}" readonly>
+                           th:value="${item.seller}" disabled>
                 </div>
                 <div class="form-group">
                     <input type="text" id="itemName" class="fadeIn second" name="itemName"
-                           placeholder="What are you selling?">
+                           th:value="${item.itemName}" disabled>
                 </div>
                 <div class="form-group">
-                    <input type="text" id="price" class="fadeIn third" name="price" placeholder="Price">
+                    <input type="text" id="price" class="fadeIn third" name="price"
+                           th:value="${item.price}" disabled>
                 </div>
                 <div class="form-group">
                     <input type="text" id="description" class="fadeIn fourth" name="description"
-                           placeholder="Description">
+                           th:value="${item.description}" disabled>
                 </div>
                 <div class="form-group">
                     <input type="text" id="itemPictureURL" class="fadeIn fifth" name="itemPictureURL"
-                           placeholder="Item's image URL">
+                           th:value="${item.itemPictureURL}" disabled>
                 </div>
                 <hr class="bg-hero hr-2"/>
-                <input type="submit" class="fadeIn sixth" value="Add item">
+                <input type="submit" class="fadeIn sixth" value="Delete item">
             </form>
         </div>
     </div>

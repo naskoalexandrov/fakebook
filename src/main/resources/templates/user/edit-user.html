@@ -19,7 +19,8 @@
                 <h1 class="text-center text-black ">Edit Profile</h1>
                 <hr class="bg-hero hr-2"/>
             </div>
-            <form th:action="@{/users/edit}" th:method="post">
+            <form th:action="@{/users/edit}" th:method="post"><input type="hidden" name="_csrf"
+                                                                     value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
                 <div class="form-group">
                     <input type="text" th:value="${model.username}" id="username" class="fadeIn second" name="username"
                            readonly>

@@ -14,4 +14,8 @@ public class Constants {
     public final static String POST_NOT_FOUND = "Post not found";
 
     public final static String POST_ID_NOT_FOUND = "Post with this id doesn't exists";
+
+    public final static String ITEM_NOT_FOUND = "Item not found";
+
+    public final static String ITEM_ID_NOT_FOUND = "Item with this id doesn't exists";
 }

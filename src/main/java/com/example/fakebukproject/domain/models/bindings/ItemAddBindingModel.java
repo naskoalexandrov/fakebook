@@ -2,15 +2,25 @@ package com.example.fakebukproject.domain.models.bindings;
 
 public class ItemAddBindingModel {
 
+    private String seller;
+
     private String itemName;
 
-    private double price;
+    private Double price;
 
     private String description;
 
     private String itemPictureURL;
 
     public ItemAddBindingModel() {
+    }
+
+    public String getSeller() {
+        return seller;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
     }
 
     public String getItemName() {

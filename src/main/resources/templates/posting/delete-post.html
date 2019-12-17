@@ -19,7 +19,9 @@
                 <h1 class="text-center text-black ">Share Something With Your Friends</h1>
                 <hr class="bg-hero hr-2"/>
             </div>
-            <form th:method="post" th:action="@{/posts/delete/{id}(id=${postId})}" enctype="multipart/form-data">
+            <form th:method="post" th:action="@{/posts/delete/{id}(id=${postId})}" enctype="multipart/form-data"><input
+                    type="hidden" name="_csrf"
+                    value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
                 <div class="form-group">
                     <input type="text" id="author" class="fadeIn second" name="author"
                            th:value="${post.author}" disabled>

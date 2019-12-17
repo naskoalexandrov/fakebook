@@ -16,21 +16,22 @@
         <div id="formContent">
             <div class="fadeIn first">
                 <hr class="bg-hero hr-2"/>
-                <h1 class="text-center text-black ">Share Something With Your Friends</h1>
+                <h1 class="text-center text-black ">Delete Item</h1>
                 <hr class="bg-hero hr-2"/>
             </div>
-            <form th:method="post" th:action="@{/posts/post}"><input type="hidden" name="_csrf"
-                                                                     value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
+            <form th:method="post" th:action="@{/pictures/delete/{id}(id=${pictureId})}" enctype="multipart/form-data">
+                <input type="hidden" name="_csrf"
+                       value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
                 <div class="form-group">
-                    <input type="text" id="author" class="fadeIn second" name="author"
-                           th:value="${#authentication.getPrincipal().getUsername()}" readonly>
+                    <input type="text" id="uploader" class="fadeIn second" name="uploader"
+                           th:value="${picture.uploader}" disabled>
                 </div>
                 <div class="form-group">
-                    <input type="text" id="text" class="fadeIn third" name="text"
-                           placeholder="Type something..">
+                    <input type="text" id="description" class="fadeIn third" name="description"
+                           th:value="${picture.description}" disabled>
                 </div>
                 <hr class="bg-hero hr-2"/>
-                <input type="submit" class="fadeIn fourth" value="Post">
+                <input type="submit" class="fadeIn fourth" value="Delete">
             </form>
         </div>
     </div>

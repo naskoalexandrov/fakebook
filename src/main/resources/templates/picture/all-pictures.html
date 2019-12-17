@@ -12,7 +12,7 @@
 </header>
 <main class="main mt-5">
     <div class="container main-container shadow-lg p-3">
-        <th:block th:each="posts, iter : ${posts}">
+        <th:block th:each="pictures, iter : ${pictures}">
             <div class="card mb-3 shadow-sm bg-white rounded">
                 <div class="card-body">
                     <div class="d-flex">
@@ -21,8 +21,9 @@
                                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5jKGCDCAwvaukRxD-dMS_yr8V4_SUjeP5B3BGIGnxKKfiON6f&s"/>
                         </div>
                         <div class="w-100 ml-3">
-                            <h4 class="border-bottom mb-0" th:utext="${posts.author}"></h4>
-                            <p th:utext="${posts.text}" class="text-muted mt-1 mb-1"></p>
+                            <h4 class="border-bottom mb-0" th:utext="${pictures.uploader}"></h4>
+                            <p th:utext="${pictures.description}" class="text-muted mt-1 mb-3"></p>
+                            <img th:src="${pictures.imageUrl}" class="rounded mx-auto d-block mb-3"/>
                         </div>
                     </div>
                 </div>

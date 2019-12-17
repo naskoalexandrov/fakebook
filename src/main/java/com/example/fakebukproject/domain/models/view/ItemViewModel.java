@@ -1,12 +1,8 @@
-package com.example.fakebukproject.domain.entities;
+package com.example.fakebukproject.domain.models.view;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+public class ItemViewModel {
 
-@Entity
-@Table
-public class Item extends BaseEntity {
+    private String id;
 
     private String seller;
 
@@ -18,10 +14,14 @@ public class Item extends BaseEntity {
 
     private String itemPictureURL;
 
-    public Item() {
+    public String getId() {
+        return id;
     }
 
-    @Column(nullable = false)
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getSeller() {
         return seller;
     }
@@ -30,7 +30,6 @@ public class Item extends BaseEntity {
         this.seller = seller;
     }
 
-    @Column(nullable = false)
     public String getItemName() {
         return itemName;
     }
@@ -39,16 +38,14 @@ public class Item extends BaseEntity {
         this.itemName = itemName;
     }
 
-    @Column(nullable = false)
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    @Column(nullable = false)
     public String getDescription() {
         return description;
     }
@@ -57,7 +54,6 @@ public class Item extends BaseEntity {
         this.description = description;
     }
 
-    @Column(nullable = false)
     public String getItemPictureURL() {
         return itemPictureURL;
     }

@@ -1,12 +1,8 @@
-package com.example.fakebukproject.domain.entities;
+package com.example.fakebukproject.domain.models.view;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+public class PictureViewModel {
 
-@Entity
-@Table
-public class Picture extends BaseEntity {
+    private String id;
 
     private String uploader;
 
@@ -14,10 +10,14 @@ public class Picture extends BaseEntity {
 
     private String imageUrl;
 
-    public Picture() {
+    public String getId() {
+        return id;
     }
 
-    @Column(nullable = false)
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getUploader() {
         return uploader;
     }
@@ -26,7 +26,6 @@ public class Picture extends BaseEntity {
         this.uploader = uploader;
     }
 
-    @Column(nullable = false)
     public String getDescription() {
         return description;
     }
@@ -35,7 +34,6 @@ public class Picture extends BaseEntity {
         this.description = description;
     }
 
-    @Column(name = "image_url", nullable = false, length = 10000)
     public String getImageUrl() {
         return imageUrl;
     }

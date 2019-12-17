@@ -23,6 +23,10 @@
                         <div class="w-100 ml-3">
                             <h4 class="border-bottom mb-0" th:utext="${posts.author}"></h4>
                             <p th:utext="${posts.text}" class="text-muted mt-1 mb-1"></p>
+                            <a th:href="@{/posts/edit/{id}(id=${posts.id})}"
+                               class="btn btn-info font-weight-bold text-white">Edit</a>
+                            <a th:href="@{/posts/delete/{id}(id=${posts.id})}"
+                               class="btn btn-danger font-weight-bold text-white">Delete</a>
                         </div>
                     </div>
                 </div>
