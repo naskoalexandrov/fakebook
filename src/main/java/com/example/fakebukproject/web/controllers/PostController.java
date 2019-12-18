@@ -107,7 +107,7 @@ public class PostController extends BaseController {
     public ModelAndView editPostConfirm(@PathVariable String id,@ModelAttribute PostBindingModel model){
         this.postService.editPost(id, this.modelMapper.map(model, PostServiceModel.class));
 
-        return super.redirect("/posts/all");
+        return super.redirect("/posts/all-by-user");
     }
 
 
@@ -126,7 +126,7 @@ public class PostController extends BaseController {
     public ModelAndView deletePostConfirm(@PathVariable String id) {
         this.postService.delete(id);
 
-        return super.redirect("/posts/all");
+        return super.redirect("/posts/all-by-user");
     }
 
     @ExceptionHandler({PostNotFoundException.class})

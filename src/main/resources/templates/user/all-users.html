@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head-user}"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/nav-bar}"></th:block>
+</header>
+<main class="main mt-5">
+    <div class="container main-container shadow-lg p-3">
+        <table class="table table-hover w-75 mx-auto">
+            <thead>
+            <tr class="row mx-auto">
+                <th class="col-lg-1 text-center">#</th>
+                <th class="col-lg-3 text-center">Username</th>
+                <th class="col-lg-2 text-center">Email</th>
+                <th class="col-lg-2 text-center">Roles</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="users, iter : ${users}">
+                <tr class="row mx-auto">
+                    <th class="col-lg-1 text-center" th:utext="${iter.index + 1}"></th>
+                    <td class="col-lg-3 text-center" th:utext="${users.username}"></td>
+                    <td class="col-lg-2 text-center" th:utext="${users.email}"></td>
+                    <th:block th:each="authorities : ${users.authorities}">
+                        <td class="col-lg-2 text-center"
+                            th:utext="${authorities.authority}">
+                        </td>
+                    </th:block>
+
+                    <th:block sec:authorize="hasAuthority('ADMIN')">
+                        <th:block th:if="${#lists.size(users.authorities) == 2}">
+                            <td class="col-lg-3 text-center">
+                                <form th:action="@{/users/set-user/{id}(id=${users.id})}" method="post">
+                                    <button class="btn btn-dark btn-width">USER</button>
+                                </form>
+                            </td>
+                        </th:block>
+                    </th:block>
+
+                    <th:block sec:authorize="hasAuthority('ADMIN')">
+                        <th:block th:if="${#lists.size(users.authorities) == 1}">
+                            <td class="col-lg-3 text-center">
+                                <form th:action="@{/users/set-admin/{id}(id=${users.id})}" method="post">
+                                    <button class="btn btn-dark btn-width">ADMIN</button>
+                                </form>
+                            </td>
+                        </th:block>
+                    </th:block>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

@@ -126,11 +126,42 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void makeAdmin(String id) {
+        User user = this.userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException(Constants.USER_ID_NOT_FOUND));
 
+        UserServiceModel userServiceModel = this.modelMapper.map(user, UserServiceModel.class);
+        userServiceModel.getAuthorities().clear();
+
+        userServiceModel.getAuthorities().add(this.roleService.findByAuthority("USER"));
+        userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ADMIN"));
+
+        LogServiceModel logServiceModel = new LogServiceModel();
+        logServiceModel.setUsername(user.getUsername());
+        logServiceModel.setDescription("User is now admin");
+        logServiceModel.setTime(LocalDateTime.now());
+
+        this.logService.putLogInDatabase(logServiceModel);
+
+        this.userRepository.saveAndFlush(this.modelMapper.map(userServiceModel, User.class));
     }
 
     @Override
     public void makeUser(String id) {
+        User user = this.userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException(Constants.USER_ID_NOT_FOUND));
 
+        UserServiceModel userServiceModel = this.modelMapper.map(user, UserServiceModel.class);
+        userServiceModel.getAuthorities().clear();
+
+        userServiceModel.getAuthorities().add(this.roleService.findByAuthority("USER"));
+
+        LogServiceModel logServiceModel = new LogServiceModel();
+        logServiceModel.setUsername(user.getUsername());
+        logServiceModel.setDescription("User is no longer admin");
+        logServiceModel.setTime(LocalDateTime.now());
+
+        this.logService.putLogInDatabase(logServiceModel);
+
+        this.userRepository.saveAndFlush(this.modelMapper.map(userServiceModel, User.class));
     }
 }

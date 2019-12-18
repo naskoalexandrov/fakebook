@@ -23,7 +23,7 @@
                         <div class="w-100 ml-3">
                             <h4 class="border-bottom mb-2"><span class="font-italic font-weight-bold mb-2" th:utext="${items.seller}"></span></h4>
                             <p>Prodava: <span th:utext="${items.itemName}" class="font-weight-bold mt-1"></span></p>
-                            <p>Cena: <span th:utext="${items.price}" class="font-weight-bold"></span></p>
+                            <p>Cena: <span th:utext="${items.price}" class="font-weight-bold"></span>$</p>
                             <p>Opisanie: <span th:utext="${items.description}" class="font-weight-bold"></span></p>
                             <img th:src="${items.itemPictureURL}" class="rounded mx-auto d-block mb-3"/>
                         </div>

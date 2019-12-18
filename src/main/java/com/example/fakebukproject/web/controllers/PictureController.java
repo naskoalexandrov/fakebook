@@ -109,7 +109,7 @@ public class PictureController extends BaseController{
     public ModelAndView editPictureConfirm(@PathVariable String id,@ModelAttribute PicturePostBindingModel model){
         this.pictureService.editPicture(id, this.modelMapper.map(model, PictureServiceModel.class));
 
-        return super.redirect("/pictures/all");
+        return super.redirect("/pictures/all-by-user");
     }
 
     @GetMapping("/delete/{id}")
@@ -127,7 +127,7 @@ public class PictureController extends BaseController{
     public ModelAndView deletePictureConfirm(@PathVariable String id) {
         this.pictureService.deletePicture(id);
 
-        return super.redirect("/pictures/all");
+        return super.redirect("/pictures/all-by-user");
     }
 
     @GetMapping("/all-pictures")

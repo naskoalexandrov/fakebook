@@ -2,6 +2,7 @@ package com.example.fakebukproject.web.controllers;
 
 import com.example.fakebukproject.domain.models.bindings.UserEditBindingModel;
 import com.example.fakebukproject.domain.models.bindings.UserRegisterBindingModel;
+import com.example.fakebukproject.domain.models.service.RoleServiceModel;
 import com.example.fakebukproject.domain.models.service.UserServiceModel;
 import com.example.fakebukproject.domain.models.view.UserProfileViewModel;
 import com.example.fakebukproject.service.UserService;
@@ -16,6 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
@@ -87,6 +93,39 @@ public class UserController extends BaseController {
         this.userService.editUserProfile(this.modelMapper.map(model, UserServiceModel.class), model.getOldPassword());
 
         return super.redirect("/home");
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PageTitle("All users")
+    public ModelAndView showAllUsers(ModelAndView modelAndView){
+        List<UserServiceModel> users = this.userService.findAllUsers()
+                .stream()
+                .map(u -> this.modelMapper.map(u, UserServiceModel.class))
+                .collect(Collectors.toList());
+
+        Map<String, Set<RoleServiceModel>> userAndAuthorities = new HashMap<>();
+        users.forEach(u -> userAndAuthorities.put(u.getId(), u.getAuthorities()));
+
+        modelAndView.addObject("users", users);
+        modelAndView.addObject("usersAndAuths", userAndAuthorities);
+        return super.view("user/all-users", modelAndView);
+    }
+
+    @PostMapping("/set-admin/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ModelAndView setAdminRole(@PathVariable String id) {
+        this.userService.makeAdmin(id);
+
+        return super.redirect("/users/all");
+    }
+
+    @PostMapping("/set-user/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ModelAndView setUserRole(@PathVariable String id) {
+        this.userService.makeUser(id);
+
+        return super.redirect("/users/all");
     }
 
     @InitBinder

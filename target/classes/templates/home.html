@@ -8,24 +8,25 @@
 <header>
     <th:block th:include="~{fragments/nav-bar}"></th:block>
 </header>
-<main class="main mt-5">
+<main class="main mt-5 ">
     <div class="container main-container shadow-lg p-3">
-        <div class="card mb-3 shadow-sm bg-white rounded">
-            <div class="card-body">
-                <div class="d-flex">
-                    <div class="author-image-wrapper">
-                        <img class="author-image img-fluid"
-                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5jKGCDCAwvaukRxD-dMS_yr8V4_SUjeP5B3BGIGnxKKfiON6f&s"/>
-                    </div>
-                    <div class="w-100 ml-3">
-                        <h4 class="border-bottom mb-0">Title</h4>
+        <div class="d-flex justify-content-center">
+            <div class="col-md-4 col-lg-10">
+                <div class="d-flex justify-content-center">
+                    <div class="container position-center">
+                        <h1 class="text-black text-center mt-5">Welcome to FakeBook :)</h1>
+                        <hr class="bg-dark hr-2"/>
+                        <h3 class="text-black text-center">See what user have posted!</h3>
+                        <h3 class="text-black text-center"><a class="btn btn-primary" role="button" th:href="@{/posts/all}">All
+                            Posts</a></h3>
+                        <h3 class="text-black text-center">See what pictures users have uploaded!</h3>
+                        <h3 class="text-black text-center"><a class="btn btn-primary" role="button" th:href="@{/pictures/all}">All
+                            Pictures</a></h3>
                     </div>
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, repudiandae facere dolore
-                    quam excepturi nemo earum dolorem dolorum quibusdam fuga dolores tempora facilis placeat assumenda
-                    eveniet sunt error! Suscipit, quis.</p>
             </div>
         </div>
+
     </div>
 </main>
 <footer>
