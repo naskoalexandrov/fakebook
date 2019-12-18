@@ -3,10 +3,10 @@ html,body {
 }
 main {
     height: 100vh;
-    background: url("https://media.istockphoto.com/vectors/multiethnic-group-of-people-vector-id910104344?k=6&m=910104344&s=612x612&w=0&h=uvqF9T5jfvN7otJgu0PJ7wwRyGCj7m9CvR7JlclpyKQ=") repeat;
+    background: url("https://media.istockphoto.com/vectors/multiethnic-group-of-people-vector-id910104344?k=6&m=910104344&s=612x612&w=0&h=uvqF9T5jfvN7otJgu0PJ7wwRyGCj7m9CvR7JlclpyKQ=");
 
 
-    background-size: cover;
+    background-size: auto;
 }
 
 .main-container {
