@@ -19,37 +19,42 @@
     <th:block sec:authorize="isAuthenticated()">
         <div class="containter" sec:authorize="hasAuthority('USER')">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-                    <a class="navbar-brand" th:href="@{/home}"><b>fakebook</b></a>
-                    <div class="collapse navbar-collapse" id="userNav">
-                        <ul class="navbar-nav ml-auto">
+                <a class="navbar-brand" th:href="@{/home}"><b>fakebook</b></a>
+                <div class="collapse navbar-collapse" id="userNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/home}">Home</a>
+                        </li>
+                        <th:block sec:authorize="hasAuthority('ADMIN')">
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{/home}">Home</a>
+                                <a class="nav-link" th:href="@{/users/all}">All Users</a>
                             </li>
-                            <th:block sec:authorize="hasAuthority('ADMIN')">
-                                <li class="nav-item">
-                                    <a class="nav-link" th:href="@{/users/all}">All Users</a>
-                                </li>
-                            </th:block>
+                        </th:block>
+                        <th:block sec:authorize="hasAuthority('ADMIN')">
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{/posts/post}">Add Post</a>
+                                <a class="nav-link" href="#">All Pictures</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/pictures/post}">Add Picture</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/items/add}">Add Item</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/items/all}">Marketplace</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/users/profile}">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/logout}">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
+                        </th:block>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/posts/post}">Add Post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/pictures/post}">Add Picture</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/items/add}">Add Item</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/items/all}">Marketplace</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/users/profile}">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/logout}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </div>
     </th:block>

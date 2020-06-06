@@ -130,7 +130,7 @@ public class PostController extends BaseController {
     }
 
     @ExceptionHandler({PostNotFoundException.class})
-    public ModelAndView handleVideoNotFound(PostNotFoundException e) {
+    public ModelAndView handlePostNotFound(PostNotFoundException e) {
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("message", e.getMessage());
         modelAndView.addObject("statusCode", e.getStatus());

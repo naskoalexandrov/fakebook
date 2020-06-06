@@ -5,7 +5,7 @@ import com.example.fakebukproject.validation.UserValidationService;
 
 public class UserValidationServiceImpl implements UserValidationService {
     @Override
-    public boolean isPictureValid(UserServiceModel userServiceModel) {
+    public boolean isUserValid(UserServiceModel userServiceModel) {
         return userServiceModel != null;
     }
 }

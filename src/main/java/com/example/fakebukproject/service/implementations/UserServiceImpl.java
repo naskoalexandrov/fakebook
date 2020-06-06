@@ -1,13 +1,14 @@
 package com.example.fakebukproject.service.implementations;
 
+import com.example.fakebukproject.constants.EmailTemplateConstants;
 import com.example.fakebukproject.domain.entities.Role;
 import com.example.fakebukproject.domain.entities.User;
 import com.example.fakebukproject.domain.models.service.LogServiceModel;
 import com.example.fakebukproject.domain.models.service.UserServiceModel;
 import com.example.fakebukproject.error.Constants;
-import com.example.fakebukproject.error.UserNotFoundException;
 import com.example.fakebukproject.repository.RoleRepository;
 import com.example.fakebukproject.repository.UserRepository;
+import com.example.fakebukproject.service.EmailService;
 import com.example.fakebukproject.service.LogService;
 import com.example.fakebukproject.service.RoleService;
 import com.example.fakebukproject.service.UserService;
@@ -19,7 +20,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private Constants constants;
+    private final EmailService emailService;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final RoleService roleService;
@@ -36,7 +37,8 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, RoleService roleService, RoleRepository roleRepository, LogService logService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(EmailService emailService, UserRepository userRepository, ModelMapper modelMapper, RoleService roleService, RoleRepository roleRepository, LogService logService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.emailService = emailService;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.roleService = roleService;
@@ -64,6 +66,9 @@ public class UserServiceImpl implements UserService {
         logServiceModel.setUsername(user.getUsername());
         logServiceModel.setDescription("User have been registered!");
         logServiceModel.setTime(LocalDateTime.now());
+
+
+        emailService.sendMessage(user.getEmail(), EmailTemplateConstants.WELCOME_SUBJECT, String.format(EmailTemplateConstants.WELCOME_TEMPLATE, user.getUsername()));
 
         this.logService.putLogInDatabase(logServiceModel);
 

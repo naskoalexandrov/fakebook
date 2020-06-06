@@ -7,6 +7,8 @@ public class Constants {
 
     public final static String PASSWORD_IS_INCORRECT = "Incorrect password";
 
+    public final static String PASSWORDS_DOESNT_MATCH = "Passwords doesn't match";
+
     public final static String PICTURE_NOT_FOUND = "Picture not found";
 
     public final static String PICTURE_ID_NOT_FOUND = "Picture with this id doesn't exists";
