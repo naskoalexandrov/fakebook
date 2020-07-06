@@ -3,8 +3,8 @@ package com.example.fakebukproject.web.controllers;
 import com.example.fakebukproject.domain.models.bindings.ItemAddBindingModel;
 import com.example.fakebukproject.domain.models.service.ItemServiceModel;
 import com.example.fakebukproject.domain.models.view.ItemViewModel;
-import com.example.fakebukproject.domain.models.view.UserProfileViewModel;
 import com.example.fakebukproject.error.ItemNotFoundException;
+import com.example.fakebukproject.service.CloudinaryService;
 import com.example.fakebukproject.service.ItemService;
 import com.example.fakebukproject.service.UserService;
 import com.example.fakebukproject.web.annotations.PageTitle;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,12 +29,14 @@ public class ItemController extends BaseController {
     private final ItemService itemService;
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final CloudinaryService cloudinaryService;
 
     @Autowired
-    public ItemController(ItemService itemService, UserService userService, ModelMapper modelMapper) {
+    public ItemController(ItemService itemService, UserService userService, ModelMapper modelMapper, CloudinaryService cloudinaryService) {
         this.itemService = itemService;
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @GetMapping("/add")
@@ -45,9 +48,13 @@ public class ItemController extends BaseController {
 
     @PostMapping("/add")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView addItemConfirm (@ModelAttribute ItemAddBindingModel model){
+    public ModelAndView addItemConfirm (@ModelAttribute ItemAddBindingModel model) throws IOException {
 
-        this.itemService.addItem(this.modelMapper.map(model, ItemServiceModel.class));
+        ItemServiceModel itemServiceModel = this.modelMapper.map(model, ItemServiceModel.class);
+
+        itemServiceModel.setItemPictureURL(this.cloudinaryService.uploadImage(model.getItemPictureURL()));
+
+        this.itemService.addItem(itemServiceModel);
 
         return super.redirect("/home");
     }

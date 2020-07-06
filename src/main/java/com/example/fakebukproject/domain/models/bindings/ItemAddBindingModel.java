@@ -1,5 +1,7 @@
 package com.example.fakebukproject.domain.models.bindings;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ItemAddBindingModel {
 
     private String seller;
@@ -10,7 +12,7 @@ public class ItemAddBindingModel {
 
     private String description;
 
-    private String itemPictureURL;
+    private MultipartFile itemPictureURL;
 
     public ItemAddBindingModel() {
     }
@@ -47,11 +49,11 @@ public class ItemAddBindingModel {
         this.description = description;
     }
 
-    public String getItemPictureURL() {
+    public MultipartFile getItemPictureURL() {
         return itemPictureURL;
     }
 
-    public void setItemPictureURL(String itemPictureURL) {
+    public void setItemPictureURL(MultipartFile itemPictureURL) {
         this.itemPictureURL = itemPictureURL;
     }
 }

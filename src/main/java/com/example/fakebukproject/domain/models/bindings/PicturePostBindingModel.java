@@ -1,12 +1,14 @@
 package com.example.fakebukproject.domain.models.bindings;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class PicturePostBindingModel {
 
     private String uploader;
 
     private String description;
 
-    private String imageUrl;
+    private MultipartFile imageUrl;
 
     public PicturePostBindingModel() {
     }
@@ -27,11 +29,11 @@ public class PicturePostBindingModel {
         this.description = description;
     }
 
-    public String getImageUrl() {
+    public MultipartFile getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public void setImageUrl(MultipartFile imageUrl) {
         this.imageUrl = imageUrl;
     }
 }

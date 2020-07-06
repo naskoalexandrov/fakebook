@@ -1,12 +1,11 @@
 package com.example.fakebukproject.web.controllers;
 
 import com.example.fakebukproject.domain.models.bindings.PicturePostBindingModel;
-import com.example.fakebukproject.domain.models.bindings.PostBindingModel;
 import com.example.fakebukproject.domain.models.service.PictureServiceModel;
-import com.example.fakebukproject.domain.models.service.PostServiceModel;
 import com.example.fakebukproject.domain.models.view.PictureViewModel;
 import com.example.fakebukproject.domain.models.view.UserProfileViewModel;
 import com.example.fakebukproject.error.PictureNotFoundException;
+import com.example.fakebukproject.service.CloudinaryService;
 import com.example.fakebukproject.service.PictureService;
 import com.example.fakebukproject.service.UserService;
 import com.example.fakebukproject.web.annotations.PageTitle;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,12 +30,14 @@ public class PictureController extends BaseController{
     private final PictureService pictureService;
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final CloudinaryService cloudinaryService;
 
     @Autowired
-    public PictureController(PictureService pictureService, UserService userService, ModelMapper modelMapper) {
+    public PictureController(PictureService pictureService, UserService userService, ModelMapper modelMapper, CloudinaryService cloudinaryService) {
         this.pictureService = pictureService;
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @GetMapping("/post")
@@ -49,9 +51,13 @@ public class PictureController extends BaseController{
 
     @PostMapping("/post")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView postPirctureConfirm (@ModelAttribute PicturePostBindingModel model){
+    public ModelAndView postPictureConfirm (@ModelAttribute PicturePostBindingModel model) throws IOException {
 
-        this.pictureService.postPicture(this.modelMapper.map(model, PictureServiceModel.class));
+        PictureServiceModel pictureServiceModel = this.modelMapper.map(model, PictureServiceModel.class);
+
+        pictureServiceModel.setImageUrl(this.cloudinaryService.uploadImage(model.getImageUrl()));
+
+        this.pictureService.postPicture(pictureServiceModel);
 
         return super.redirect("/home");
     }

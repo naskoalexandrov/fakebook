@@ -35,7 +35,7 @@ public class Picture extends BaseEntity {
         this.description = description;
     }
 
-    @Column(name = "image_url", nullable = false, length = 10000)
+    @Column(name = "image_url", nullable = false)
     public String getImageUrl() {
         return imageUrl;
     }

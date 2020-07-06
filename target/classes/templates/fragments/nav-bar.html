@@ -32,7 +32,12 @@
                         </th:block>
                         <th:block sec:authorize="hasAuthority('ADMIN')">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">All Pictures</a>
+                                <a class="nav-link" th:href="@{/pictures/all}">All Pictures</a>
+                            </li>
+                        </th:block>
+                        <th:block sec:authorize="hasAuthority('ADMIN')">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/posts/all}">All Posts</a>
                             </li>
                         </th:block>
                         <li class="nav-item">
