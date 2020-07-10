@@ -25,7 +25,7 @@
                             <p>Prodava: <span th:utext="${items.itemName}" class="font-weight-bold mt-1"></span></p>
                             <p>Cena: <span th:utext="${items.price}" class="font-weight-bold"></span></p>
                             <p>Opisanie: <span th:utext="${items.description}" class="font-weight-bold"></span></p>
-                            <img th:src="${items.itemPictureURL}" class="rounded mx-auto d-block mb-3"/>
+                            <img th:src="${items.itemPictureURL}" class="rounded mx-auto d-block mb-3" width="30%"/>
                             <a th:href="@{/items/edit/{id}(id=${items.id})}"
                                class="btn btn-info font-weight-bold text-white">Edit</a>
                             <a th:href="@{/items/delete/{id}(id=${items.id})}"

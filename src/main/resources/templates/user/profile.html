@@ -16,8 +16,7 @@
         <div id="formContent">
             <div class="row d-flex justify-content-center fadeIn first">
                 <div class="col-md-6 d-flex flex-column">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5jKGCDCAwvaukRxD-dMS_yr8V4_SUjeP5B3BGIGnxKKfiON6f&s"
-                         class="mx-auto mt-5" width="200" height="200">
+                    <img th:src="${model.profilePhoto}" class="mx-auto mt-5 author-image img-fluid" width="150" height="200">
                     <h4 class="mx-auto mt-5 text-muted  fadeIn second" th:utext="${model.username}"></h4>
                     <h5 class="mx-auto mt-3 text-muted  fadeIn third" th:utext="${model.email}"></h5>
                 </div>

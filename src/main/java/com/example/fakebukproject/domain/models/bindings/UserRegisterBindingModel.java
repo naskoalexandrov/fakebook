@@ -1,11 +1,14 @@
 package com.example.fakebukproject.domain.models.bindings;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class UserRegisterBindingModel {
     private String id;
     private String username;
     private String password;
     private String confirmPassword;
     private String email;
+    private MultipartFile profilePhoto;
 
     public UserRegisterBindingModel() {
     }
@@ -48,5 +51,13 @@ public class UserRegisterBindingModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public MultipartFile getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(MultipartFile profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 }

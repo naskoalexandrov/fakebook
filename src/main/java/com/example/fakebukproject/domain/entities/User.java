@@ -13,6 +13,7 @@ public class User extends BaseEntity implements UserDetails {
     private String username;
     private String password;
     private String email;
+    private String profilePhoto;
     private Set<Role> authorities;
 
     public User() {
@@ -43,6 +44,15 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Column(nullable = false)
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 
     @Override

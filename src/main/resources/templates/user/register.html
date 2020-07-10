@@ -9,32 +9,37 @@
     <th:block th:include="~{fragments/nav-bar}"></th:block>
 </header>
 <main class="mt-5">
-	<div class="wrapper fadeInDown">
-  <div id="formContent">
-    <div class="fadeIn first">
-      <hr class="bg-hero hr-2"/>
-      <h1 class="text-center text-black ">Register</h1>
-      <hr class="bg-hero hr-2"/>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <div class="fadeIn first">
+                <hr class="bg-hero hr-2"/>
+                <h1 class="text-center text-black ">Register</h1>
+                <hr class="bg-hero hr-2"/>
+            </div>
+            <form th:method="post" th:action="@{/users/register}" enctype="multipart/form-data"><input type="hidden" name="_csrf"
+                                                                         value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
+                <div class="form-group">
+                    <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" class="fadeIn fourth" name="confirmPassword"
+                           placeholder="Confirm Password">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="email" class="fadeIn fifth" name="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="profilePhoto" class="fadeIn sixth">Choose profile picture: </label>
+                    <input type="file" id="profilePhoto" class="fadeIn sixth" name="profilePhoto">
+                </div>
+                <hr class="bg-hero hr-2"/>
+                <input type="submit" class="fadeIn sixth" value="Register">
+            </form>
+        </div>
     </div>
-    <form th:method="post" th:action="@{/users/register}"><input type="hidden" name="_csrf"
-                                                                 value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
-        <div class="form-group">
-      <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
-        </div>
-        <div class="form-group">
-      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
-        </div>
-        <div class="form-group">
-	  <input type="password" id="confirmPassword" class="fadeIn fourth" name="confirmPassword" placeholder="Confirm Password">
-        </div>
-        <div class="form-group">
-	  <input type="text" id="email" class="fadeIn fifth" name="email" placeholder="Email">
-        </div>
-      <hr class="bg-hero hr-2"/>
-      <input type="submit" class="fadeIn sixth" value="Register">
-    </form>
-  </div>
-</div>
 </main>
 <footer>
     <th:block th:include="~{fragments/footer}"></th:block>

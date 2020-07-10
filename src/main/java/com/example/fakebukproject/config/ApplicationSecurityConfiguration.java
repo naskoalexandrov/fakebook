@@ -41,7 +41,10 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .defaultSuccessUrl("/home", true)
                 .and()
                 .logout()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/");
     }
 
     @Bean

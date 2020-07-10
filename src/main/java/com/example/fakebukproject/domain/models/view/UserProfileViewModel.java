@@ -4,6 +4,7 @@ public class UserProfileViewModel {
 
     private String username;
     private String email;
+    private String profilePhoto;
 
     public UserProfileViewModel() {
     }
@@ -22,5 +23,13 @@ public class UserProfileViewModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 }

@@ -5,6 +5,7 @@ import com.example.fakebukproject.domain.models.bindings.UserRegisterBindingMode
 import com.example.fakebukproject.domain.models.service.RoleServiceModel;
 import com.example.fakebukproject.domain.models.service.UserServiceModel;
 import com.example.fakebukproject.domain.models.view.UserProfileViewModel;
+import com.example.fakebukproject.service.CloudinaryService;
 import com.example.fakebukproject.service.UserService;
 import com.example.fakebukproject.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -29,11 +31,13 @@ public class UserController extends BaseController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final CloudinaryService cloudinaryService;
 
     @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, ModelMapper modelMapper, CloudinaryService cloudinaryService) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @GetMapping("/register")
@@ -45,12 +49,16 @@ public class UserController extends BaseController {
 
     @PostMapping("/register")
     @PreAuthorize("isAnonymous()")
-    public ModelAndView registerConfirm(@ModelAttribute UserRegisterBindingModel model) {
+    public ModelAndView registerConfirm(@ModelAttribute UserRegisterBindingModel model) throws IOException {
         if (!model.getPassword().equals(model.getConfirmPassword())) {
             return super.view("user/register");
         }
 
-        this.userService.registerUser(this.modelMapper.map(model, UserServiceModel.class));
+        UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
+
+        userServiceModel.setProfilePhoto(this.cloudinaryService.uploadImage(model.getProfilePhoto()));
+
+        this.userService.registerUser(userServiceModel);
 
         return super.redirect("/login");
     }

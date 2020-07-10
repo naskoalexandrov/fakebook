@@ -12,7 +12,7 @@ public class UserServiceModel extends BaseServiceModel {
 
     private String email;
 
-    private List<User> friends;
+    private String profilePhoto;
 
     private Set<RoleServiceModel> authorities;
 
@@ -43,12 +43,12 @@ public class UserServiceModel extends BaseServiceModel {
         this.email = email;
     }
 
-    public List<User> getFriends() {
-        return friends;
+    public String getProfilePhoto() {
+        return profilePhoto;
     }
 
-    public void setFriends(List<User> friends) {
-        this.friends = friends;
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 
     public Set<RoleServiceModel> getAuthorities() {
