@@ -37,7 +37,7 @@ public class User extends BaseEntity implements UserDetails {
         this.password = password;
     }
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     public String getEmail() {
         return email;
     }
@@ -46,7 +46,7 @@ public class User extends BaseEntity implements UserDetails {
         this.email = email;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     public String getProfilePhoto() {
         return profilePhoto;
     }

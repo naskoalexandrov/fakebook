@@ -1,6 +1,7 @@
 package com.example.fakebukproject.web.controllers;
 
 import com.example.fakebukproject.domain.models.bindings.ItemAddBindingModel;
+import com.example.fakebukproject.domain.models.bindings.ItemEditBindingModel;
 import com.example.fakebukproject.domain.models.service.ItemServiceModel;
 import com.example.fakebukproject.domain.models.view.ItemViewModel;
 import com.example.fakebukproject.error.ItemNotFoundException;
@@ -117,7 +118,7 @@ public class ItemController extends BaseController {
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView editItemConfirm(@PathVariable String id,@ModelAttribute ItemAddBindingModel model){
+    public ModelAndView editItemConfirm(@PathVariable String id,@ModelAttribute ItemEditBindingModel model){
         this.itemService.editItem(id, this.modelMapper.map(model, ItemServiceModel.class));
 
         return super.redirect("/items/all-by-user");

@@ -56,7 +56,9 @@ public class UserController extends BaseController {
 
         UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
 
-        userServiceModel.setProfilePhoto(this.cloudinaryService.uploadImage(model.getProfilePhoto()));
+        if(!model.getProfilePhoto().getOriginalFilename().equals("")) {
+            userServiceModel.setProfilePhoto(this.cloudinaryService.uploadImage(model.getProfilePhoto()));
+        }
 
         this.userService.registerUser(userServiceModel);
 

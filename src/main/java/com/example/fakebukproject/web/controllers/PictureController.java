@@ -1,5 +1,6 @@
 package com.example.fakebukproject.web.controllers;
 
+import com.example.fakebukproject.domain.models.bindings.PictureEditBindingModel;
 import com.example.fakebukproject.domain.models.bindings.PicturePostBindingModel;
 import com.example.fakebukproject.domain.models.service.PictureServiceModel;
 import com.example.fakebukproject.domain.models.view.PictureViewModel;
@@ -112,7 +113,7 @@ public class PictureController extends BaseController{
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView editPictureConfirm(@PathVariable String id,@ModelAttribute PicturePostBindingModel model){
+    public ModelAndView editPictureConfirm(@PathVariable String id,@ModelAttribute PictureEditBindingModel model){
         this.pictureService.editPicture(id, this.modelMapper.map(model, PictureServiceModel.class));
 
         return super.redirect("/pictures/all-by-user");
